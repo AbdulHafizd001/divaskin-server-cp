@@ -1,0 +1,6 @@
+import os
+
+class Config:
+    GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
+    GOOGLE_CLOUD_CREDENTIALS = os.getenv("GOOGLE_CLOUD_CREDENTIALS")
+    GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME")
