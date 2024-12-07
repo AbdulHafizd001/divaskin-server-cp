@@ -5,7 +5,7 @@ from PIL import Image
 import requests
 
 # Load model globally to avoid reloading
-model = tf.keras.models.load_model("model/skin_model.h5")
+model = tf.keras.models.load_model("model/model.h5")
 
 # Google Cloud Storage configurations
 BUCKET_NAME = "your-bucket-name"
@@ -32,5 +32,5 @@ def classify_skin_type(image_url):
     img_array = np.expand_dims(img_array, axis=0)
 
     prediction = model.predict(img_array)
-    classes = ["Oily", "Dry", "Combination", "Normal"]
+    classes = ["Oily", "Dry", "Normal"]
     return classes[np.argmax(prediction)]
