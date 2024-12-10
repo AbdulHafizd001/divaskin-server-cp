@@ -1,6 +1,6 @@
-import os
 from flask import Blueprint, request, jsonify
-from .utils import upload_to_gcs, delete_from_gcs, classify_skin_type
+from .utils import upload_to_gcs, delete_from_gcs, fetch_image
+from .model import classify_skin_type
 
 bp = Blueprint('api', __name__)
 
@@ -27,8 +27,15 @@ def predict_skin_type():
         return jsonify({"error": "No image URL provided"}), 400
 
     try:
-        result = classify_skin_type(image_url)
-        return jsonify({"message": "Prediction successful", "result": result}), 200
+        image_data = fetch_image(image_url)
+        result = classify_skin_type(image_data)
+        response = {
+            "hasil_analisa": f"Anda memiliki tipe kulit {result['skin_type'].lower()}",
+            "akurasi": f"{result['accuracy']}%",
+            "deskripsi": result['description'],
+            "rekomendasi": result['recommendations']
+        }
+        return jsonify(response), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

@@ -23,7 +23,7 @@ def test_predict_skin_type(client, mocker):
     # Mock classify_skin_type function
     mocker.patch('app.utils.classify_skin_type', return_value="Normal")
 
-    mock_image_url = "https://storage.googleapis.com/your-bucket-name/test.jpg"
+    mock_image_url = "https://storage.googleapis.com/bucket-divaskin/test.jpg"
     response = client.post('/predict', json={"image_url": mock_image_url})
     assert response.status_code == 200
     data = response.get_json()
@@ -40,7 +40,7 @@ def test_delete_image(client, mocker):
     # Mock delete_from_gcs function
     mocker.patch('app.utils.delete_from_gcs', return_value=None)
 
-    mock_image_url = "https://storage.googleapis.com/your-bucket-name/test.jpg"
+    mock_image_url = "https://storage.googleapis.com/bucket-divaskin/test.jpg"
     response = client.delete('/delete', json={"image_url": mock_image_url})
     assert response.status_code == 200
     data = response.get_json()
